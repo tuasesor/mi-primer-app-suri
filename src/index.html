@@ -1,17 +1,233 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Azure Static Web App</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terminal // Access</title>
+<style>
+    :root {
+        --green: #00ff00;
+        --dark-green: #00aa00;
+        --bg: #030303;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+    }
+
+    body {
+        color: var(--green);
+        font-family: "Courier New", Courier, monospace;
+        overflow-x: hidden;
+    }
+
+    /* Sutil efecto de pantalla CRT */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+            repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.025) 0px,
+                rgba(255,255,255,0.025) 1px,
+                transparent 2px,
+                transparent 4px
+            );
+        z-index: 10;
+    }
+
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+            ellipse at center,
+            transparent 45%,
+            rgba(0,0,0,.55) 100%
+        );
+        z-index: 9;
+    }
+
+    .page {
+        width: min(100%, 1000px);
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 24px 20px 50px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .terminal {
+        width: 100%;
+        max-width: 820px;
+        text-align: center;
+        text-shadow: 0 0 5px rgba(0,255,0,.45);
+        animation: appear .8s ease-out;
+    }
+
+    .line {
+        height: 3px;
+        background: var(--green);
+        width: 72%;
+        margin: 0 auto 24px;
+        box-shadow: 0 0 7px rgba(0,255,0,.35);
+    }
+
+    .line.bottom {
+        margin: 30px auto 0;
+    }
+
+    .title {
+        font-size: clamp(17px, 2.1vw, 24px);
+        font-weight: bold;
+        margin: 0 0 18px;
+    }
+
+    .message {
+        font-size: clamp(12px, 1.55vw, 17px);
+        line-height: 1.35;
+        margin: 0 auto 18px;
+        max-width: 790px;
+    }
+
+    .muted {
+        color: #00d000;
+    }
+
+    .crew-title {
+        margin-top: 30px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .crew {
+        color: #ff1010;
+        font-weight: bold;
+        font-size: clamp(13px, 1.5vw, 17px);
+        margin: 14px 0 25px;
+        text-shadow: 0 0 5px rgba(255,0,0,.35);
+    }
+
+    .link {
+        color: #00ff00;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .link:hover {
+        color: white;
+        text-shadow: 0 0 8px white;
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 9px;
+        height: 16px;
+        background: var(--green);
+        margin-left: 4px;
+        vertical-align: -2px;
+        animation: blink 1s steps(1) infinite;
+    }
+
+    .footer-art {
+        width: 120px;
+        height: 20px;
+        margin: 26px auto 0;
+        position: relative;
+        opacity: .8;
+    }
+
+    .footer-art::before,
+    .footer-art::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-art::before {
+        width: 100px;
+        height: 2px;
+        top: 8px;
+        background: #8b0000;
+        box-shadow:
+            -28px 0 0 #8b0000,
+             28px 0 0 #8b0000;
+    }
+
+    .footer-art::after {
+        width: 28px;
+        height: 5px;
+        top: 7px;
+        background: #aaa;
+        box-shadow: 0 0 5px #777;
+    }
+
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .page { padding-top: 16px; }
+        .line { width: 90%; }
+        .message { font-size: 12px; }
+        .crew-title { font-size: 15px; }
+    }
+</style>
 </head>
 
 <body>
-  <main>
-    <h1>InfoTEC Hola Mundo</h1>
-  </main>
-</body>
+<main class="page">
+    <section class="terminal" aria-label="Página estilo terminal">
+        <div class="line"></div>
 
+        <h1 class="title">| Terminal Access |</h1>
+
+        <p class="message">
+            [#] Esta página web estática ah sido Hackeada con éxito.
+            <br>
+            Sabemos todo acerca de tu cuenta labmx.ai
+        </p>
+
+        <p class="message muted">
+            Bienvenido, Admin. Donde está tu seguridad?
+            <br>
+            Tu sistema está siendo monitoreado<span class="cursor"></span>
+        </p>
+
+        <div class="crew-title">Crew:</div>
+
+        <div class="crew">
+            robotonio,tuaseror
+        </div>
+
+        <div class="message">
+            Para desecriptar tu cuenta, contacta con nosotros en:
+            <a class="link" href="#" onclick="return false;">https://redporlaciberseguridad.org/</a>
+        </div>
+
+        <div class="line bottom"></div>
+
+        <div class="footer-art" aria-hidden="true"></div>
+    </section>
+</main>
+</body>
 </html>
